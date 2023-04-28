@@ -1,0 +1,85 @@
+from news.models import *	
+ 
+		
+user1 = User.objects.create(username = 'Александр')
+user2 = User.objects.create(username = 'Ксения')
+ 
+		
+author1 = Author.objects.create(user_id=1)
+author2 = Author.objects.create(user_id=2)
+
+		
+cat1 = Category.objects.create(name='Политика')
+cat2 = Category.objects.create(name='Спорт')    
+cat3 = Category.objects.create(name='Образование') 
+cat4 = Category.objects.create(name='Музыка') 
+
+		
+title1 = 'Политические «тяжеловесы» Поморья заявились на участие в областных выборах'
+text1 = 'Вчера в Архангельской области завершилось выдвижение участников предварительного голосования «Единой России». За право представлять правящую партию на предстоящих осенью этого года депутатских выборах будут бороться общественники, бюджетники, предприниматели, волонтеры, участники СВО, а также начинающие и опытные политики. В последний день регистрации кандидатов заявки подали председатель правительства Архангельской области Алексей Алсуфьев, руководитель администрации губернатора и правительства Архангельской области Ваге Петросян, а также глава Архангельска Дмитрий Морев. Они примут участие в грядущих выборах в Областное собрание депутатов.'
+title2 = 'В столице начнет работать редакция школьного спорта'
+text2 = 'Школьники и студенты образовательных организаций столицы смогут попробовать себя в качестве спортивных журналистов. Московский центр «Патриот.Спорт» столичного Департамента образования и науки открывает набор в «Редакцию школьного спорта» — команду школьников и студентов колледжей, которые хотят попробовать себя на поприще спортивной журналистики. В свободное от учебы время юные корреспонденты будут посещать и освещать футбольные, баскетбольные и волейбольные матчи, соревнования по спортивной гимнастике и другим популярным видам спорта — как в рамках своего Школьного спортивного клуба, так и на профессиональной спортивной арене. Создавать профессиональный контент им помогут кураторы — сотрудники Московского центра «Патриот.Спорт».'
+title3 = 'В столице Хакасии пройдет вечер духовой музыки'
+text3 = '5 мая в этнокафе Хакасского национального краеведческого музея пройдет концерт духовой музыки. Гость вечера - Brass band. Это ансамбль из пяти медных духовых и ударных инструментов. Все музыканты являются солистами симфонического оркестра. В репертуаре такие жанры, как классика, эстрада, Bossa Nova, Classic Jazz и другие. Брасс - это популярное направление духовой музыки, которое доказывает, что на духовых можно играть не только военные марши, а любые жанры от латины до техно.'	
+
+post1 = Post.objects.create(type='ARTICLE', author_id=1, title=title1, content=text1)
+post2 = Post.objects.create(type='ARTICLE', author_id=2, title=title2, content=text2)
+post3 = Post.objects.create(type='NEWS', author_id=1, title=title3, content=text3)
+		
+		
+post_category1 = PostCategory.objects.create(post_id=1, category_id=1)
+post_category2 = PostCategory.objects.create(post_id=2, category_id=2)
+post_category3 = PostCategory.objects.create(post_id=2, category_id=3)
+post_category4 = PostCategory.objects.create(post_id=3, category_id=1)
+
+		
+com1 = Comment.objects.create(user_id=1, post_id=2, text = 'Кайфы!')
+com2 = Comment.objects.create(user_id=1, post_id=2, text = 'Норм')
+com3 = Comment.objects.create(user_id=2, post_id=1, text = 'Хорошо')
+com4 = Comment.objects.create(user_id=2, post_id=3, text = 'Очень полезно')
+
+		
+post1.like()
+post2.like()
+post3.like()
+post2.like()
+post3.dislike()
+com1.like()
+com2.like()
+com3.like()
+com4.like()
+com4.like()
+com4.dislike()
+
+		
+author1.update_rating()
+author2.update_rating()
+
+		
+best_author = Author.objects.filter().order_by('-rating')[0]
+User.objects.get(pk = best_author.user_id).username
+best_author.rating
+
+		
+best_post = Post.objects.filter().order_by('-rating')[0]
+best_post.time_in
+User.objects.get(pk = (Author.objects.get(pk = best_post.author_id).user_id)).username
+best_post.rating
+best_post.title
+best_post.preview()
+
+		
+comments_to_best_post = Comment.objects.filter(post_id = best_post.pk)
+
+for comment in comments_to_best_post:
+	User.objects.get(pk = comment.user_id).username
+	comment.time_in
+	comment.rating
+	comment.text
+
+
+
+
+
+
+
