@@ -36,7 +36,7 @@ class Author(models.Model):
 
 class Post(models.Model):
     category = models.ManyToManyField(Category, through='PostCategory')
-    type = models.CharField(max_length=64, choices=TYPE_POST_CHOICES)
+    type_of = models.CharField(max_length=64, choices=TYPE_POST_CHOICES)
     time_in = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=64, blank=True)
     content = models.TextField(blank=True)
