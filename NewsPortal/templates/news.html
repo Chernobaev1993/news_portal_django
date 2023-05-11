@@ -26,7 +26,7 @@ Products
 
            {% for new in news %}
            <tr>
-               <td>{{ new.title | censor }}</td>
+               <td>{{ new.title | truncatewords:6 | censor }}</td>
                <td>{{ new.time_in }}</td>
                <td>{{ new.content | truncatechars:20 | censor }}</td>
            </tr>
