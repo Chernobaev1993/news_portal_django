@@ -10,7 +10,7 @@ def censor(value):
     code: код валюты
     """
     text_new = str(value)
-    bad_words = ['духовой', 'политики', 'школьников']
+    bad_words = ['духовой', 'опытные', 'школьников']
     lst = value.split()
     for word in lst:
         if word in bad_words:

@@ -11,6 +11,5 @@
 {% block content %}
 <h1>{{ post.title | censor }}</h1>
 <p>{{ post.content | censor }}</p>
-<h6>{{ post.time_in }}</h6>
-<h6>{% current_time '%b %d %Y' %}</h6>
+<h6>Дата публикации - {{ post.time_in | date:'d.m.Y' }}</h6>
 {% endblock content %}
