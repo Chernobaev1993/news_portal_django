@@ -18,6 +18,8 @@ class NewsList(ListView):
     # Его надо указать, чтобы обратиться к списку объектов в html-шаблоне.
     context_object_name = 'news'
 
+    paginate_by = 2  # вот так мы можем указать количество записей на странице
+
     # Метод get_context_data позволяет нам изменить набор данных,
     # который будет передан в шаблон.
     # def get_context_data(self, **kwargs):
