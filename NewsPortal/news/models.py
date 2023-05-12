@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.urls import reverse
 
 TYPE_POST_CHOICES = [
     ('NEWS', 'NEWS'),
@@ -9,6 +10,9 @@ TYPE_POST_CHOICES = [
 
 class Category(models.Model):
     name = models.CharField(max_length=64, unique=True)
+
+    def __str__(self):
+        return f'{self.name}'
 
 
 class Author(models.Model):
@@ -33,6 +37,9 @@ class Author(models.Model):
         self.rating = rating_of_author
         self.save()
 
+    def __str__(self):
+        return f"{User.objects.get(pk=self.user_id)}"
+
 
 class Post(models.Model):
     category = models.ManyToManyField(Category, through='PostCategory')
@@ -54,6 +61,9 @@ class Post(models.Model):
     def preview(self):
         preview = self.content
         return preview[:124] + '...'
+
+    def get_absolute_url(self):
+        return reverse('post_detail', args=[str(self.id)])
 
 
 class Comment(models.Model):
